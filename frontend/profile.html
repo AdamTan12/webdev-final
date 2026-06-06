@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Pinder - Profile</title>
+      <link rel="stylesheet" href="css/base.css" />
+      <link rel="stylesheet" href="css/profile.css" />
+      <script src="js/store.js" defer></script>
+      <script src="js/api.js" defer></script>
+      <script src="js/profile.js" defer></script>
+  </head>
+
+  <body class="auth-guard">
+    <header class="app-header">
+        <div class="header-spacer"></div>
+        <div class="header-logo">Pinder</div>
+        <button class="icon-btn save-btn hidden" id="save-btn" title="Save changes">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        </button>
+    </header>
+
+    <div class="profile-body">
+        <div class="profile-hero">
+            <div class="profile-avatar" id="profile-emoji"></div>
+            <div class="profile-hero-name" id="profile-name">Loading...</div>
+            <div class="profile-hero-breed" id="profile-breed"></div>
+        </div>
+
+        <div class="profile-content">
+            <div id="profile-error" class="error-msg hidden"></div>
+
+            <div class="profile-section">
+                <div class="profile-section-title">Details</div>
+                <div class="profile-field">
+                    <span class="profile-field-label">Name</span>
+                    <input class="inline-field" id="edit-name" type="text" oninput="onFieldChange('edit-name')" />
+                </div>
+                <div class="profile-field">
+                    <span class="profile-field-label">Species</span>
+                    <input class="inline-field" id="edit-species" type="text" oninput="onFieldChange('edit-species')" />
+                </div>
+                <div class="profile-field">
+                    <span class="profile-field-label">Breed</span>
+                    <input class="inline-field" id="edit-breed" type="text" placeholder="—" oninput="onFieldChange('edit-breed')" />
+                </div>
+                <div class="profile-field">
+                    <span class="profile-field-label">Age (yrs)</span>
+                    <input class="inline-field inline-field--short" id="edit-age" type="number" min="0" max="30" oninput="onFieldChange('edit-age')" />
+                </div>
+                <div class="profile-field">
+                    <span class="profile-field-label">Weight (lbs)</span>
+                    <input class="inline-field inline-field--short" id="edit-weight" type="number" min="0" oninput="onFieldChange('edit-weight')" />
+                </div>
+                <div class="profile-field">
+                    <span class="profile-field-label">Gender</span>
+                    <select class="inline-field inline-field--select" id="edit-gender" onchange="onFieldChange('edit-gender')">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="profile-field">
+                    <span class="profile-field-label">Activity</span>
+                    <input class="inline-field" id="edit-activity" type="text" placeholder="—" oninput="onFieldChange('edit-activity')" />
+                </div>
+                <div class="profile-field">
+                    <span class="profile-field-label">Food</span>
+                    <input class="inline-field" id="edit-food" type="text" placeholder="—" oninput="onFieldChange('edit-food')" />
+                </div>
+                <div class="profile-field">
+                    <span class="profile-field-label">Trait</span>
+                    <input class="inline-field" id="edit-trait" type="text" placeholder="—" oninput="onFieldChange('edit-trait')" />
+                </div>
+            </div>
+
+            <div class="profile-section">
+                <div class="profile-section-title">Bio</div>
+                <textarea class="inline-field inline-field--bio" id="edit-bio" rows="3" placeholder="No bio yet." oninput="onFieldChange('edit-bio')"></textarea>
+            </div>
+
+            <div class="profile-section">
+                <div class="profile-section-title">Tags</div>
+                <div class="profile-tags" id="profile-tags"></div>
+                <div class="add-row add-row--mt">
+                    <div class="field-group field-group--inline">
+                        <input type="text" id="new-tag-input" placeholder="Add a tag..." />
+                    </div>
+                    <button class="btn-secondary" onclick="addTag()">Add</button>
+                </div>
+            </div>
+
+            <div class="profile-section">
+                <div class="profile-section-title">Photos</div>
+                <div class="profile-images-grid" id="profile-images"></div>
+                <div class="add-row">
+                    <input type="file" id="new-image-file" accept="image/*" class="file-input-hidden" onchange="onPhotoAdded(event)" />
+                    <button class="btn-secondary upload-photo-btn" onclick="document.getElementById('new-image-file').click()">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="upload-icon"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        Add Photo
+                    </button>
+                </div>
+            </div>
+
+            <div class="profile-section">
+                <button class="logout-btn" onclick="signOut()">Sign Out</button>
+            </div>
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <button class="nav-btn" onclick="goDiscover()">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>Discover</span>
+        </button>
+        <button class="nav-btn" onclick="goMatches()">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            <span>Matches</span>
+        </button>
+        <button class="nav-btn active">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            <span>Profile</span>
+        </button>
+    </nav>
+  </body>
+</html>
