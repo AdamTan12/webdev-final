@@ -1,4 +1,4 @@
-# Pinder - Frontend
+# Frontend
 
 A pet matchmaking app built with vanilla HTML, CSS, and JavaScript.
 
@@ -20,41 +20,32 @@ create-pet.html
 discover.html
 matches.html
 profile.html
-    css/
-        base.css
-        auth.css
-        create-pet.css
-        discover.css
-        matches.css
-        profile.css
-    js/
-        store.js
-        api.js
-        auth.js
-        create-pet.js
-        discover.js
-        matches.js
-        profile.js
+css/
+    base.css
+    auth.css
+    create-pet.css
+    discover.css
+    matches.css
+    profile.css
+js/
+    store.js
+    api.js
+    auth.js
+    create-pet.js
+    discover.js
+    matches.js
+    profile.js
 ```
 
-## Setup
+## API
 
-No build step or dependencies required.
-
-1. Clone the repo.
-2. Open `index.html` in a browser, or serve the folder with any static file server:
-
-```bash
-npx serve .
-# or
-python -m http.server
-```
-
-3. Set the API base URL in `js/api.js`:
+The frontend talks to the backend via `js/api.js`. The base URL is set at the top of that file:
 
 ```js
 const API_URL = "https://481-backend-production.up.railway.app";
 ```
+
+Change this to `http://localhost:8000` to point at a local backend instance.
 
 ## Walkthrough
 
@@ -63,10 +54,3 @@ const API_URL = "https://481-backend-production.up.railway.app";
 3. **Discover** - swipe right to like, left to pass. A match popup appears on mutual likes.
 4. **Matches** - view all matches and open a chat with any of them.
 5. **Profile** - edit your pet's details, add/remove photos and tags, or sign out.
-
-## Backend
-
-See the backend README for API setup and environment variables. The backend runs at:
-
-**Production:** `https://481-backend-production.up.railway.app`  
-**Docs:** `https://481-backend-production.up.railway.app/docs`

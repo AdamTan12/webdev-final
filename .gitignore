@@ -1,0 +1,15 @@
+# Environment
+backend/.env
+
+# Python
+backend/.venv/
+backend/__pycache__/
+backend/app/__pycache__/
+backend/app/routers/__pycache__/
+backend/app/schemas/__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+
+# macOS
+.DS_Store
